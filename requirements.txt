@@ -1,0 +1,5 @@
+duckdb
+pandas
+streamlit
+scikit-learn
+scikit-image

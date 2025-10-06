@@ -14,9 +14,10 @@ def extraire_contours():
     """
     os.makedirs(CROPS_DIR, exist_ok=True)
     images_input = [image for image in os.listdir(INPUT_DIR) if image.lower().endswith((".png",".jpg",".jpeg"))]
+    print(f"liste des images à traiter dans {INPUT_DIR} : {images_input}    ")
 
     for image in images_input:
-        print(f"Traitement de {image}"): 
+        print(f"Traitement de {image}")
         try :
             img = cv2.imread(INPUT_DIR / image)
         except Exception as e:
@@ -25,9 +26,11 @@ def extraire_contours():
 
         data = pytesseract.image_to_data(img, output_type=Output.DICT)
 
-    for i, text in enumerate(data["text"]):
-        if not text.strip():
-            continue
-        x, y, w, h = data["left"][i], data["top"][i], data["width"][i], data["height"][i]
-        crop = img[y:y+h, x:x+w]
-        cv2.imwrite(os.path.join(CROPS_DIR, f"crop_{i}.png"), crop)
+        for i, text in enumerate(data["text"]):
+            if not text.strip():
+                continue
+            x, y, w, h = data["left"][i], data["top"][i], data["width"][i], data["height"][i]
+            crop = img[y:y+h, x:x+w]
+            cv2.imwrite(os.path.join(CROPS_DIR, f"{image}_crop_{i}.png"), crop)
+    
+    return True
