@@ -1,10 +1,11 @@
+"""Script qui n'st à lancer qu'une seule fois."""
+
 import duckdb
 from settings import BASE_DE_DONNEES
 
 # Connexion à une base locale (fichier duckdb)
 con = duckdb.connect(BASE_DE_DONNEES)
 
-# Création de la table si elle n'existe pas
 con.execute("""
 CREATE TABLE IF NOT EXISTS membres (
     membre TEXT,
@@ -14,6 +15,5 @@ CREATE TABLE IF NOT EXISTS membres (
     gemmes INTEGER
 )
 """)
-
 
 con.close()
