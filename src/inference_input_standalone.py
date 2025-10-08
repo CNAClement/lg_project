@@ -7,14 +7,14 @@ import os
 import joblib
 import numpy as np
 from settings import modele_serialisé, CROPS_DIR
-from traitement_image import image_to_text , prétraitement_image
+from traitement_image import image_to_text , prétraitement_crop
 
 modele_classifieur = joblib.load(modele_serialisé)
 liste_crops = [crop for crop in os.listdir(CROPS_DIR) if crop.lower().endswith(".png")]
 liste_crops_prétraités = []
 for crop in liste_crops : 
     crop_path = os.path.join(CROPS_DIR, crop)
-    x_crop = prétraitement_image(crop_path) # shape (4096,)
+    x_crop = prétraitement_crop(crop_path) # shape (4096,)
     liste_crops_prétraités.append(x_crop)
     # x_crop = x_crop.reshape(1, -1) # reshape pour avoir la bonne forme (1, 4096)
     # rappel, pour son entrainement, le modèle prend en entrée un x qui est un tableau numpy 2D de shape (nb_images, 4096)

@@ -6,7 +6,7 @@ from sklearn import svm
 from sklearn.metrics import classification_report
 import joblib
 from settings import LABELS_CSV , CROPS_DIR_ENTRAINEMENT, modele_serialisé
-from traitement_image import prétraitement_image
+from traitement_image import prétraitement_crop
 
 
 # Charger les labels
@@ -21,7 +21,7 @@ for _, row in labels_df.iterrows():
     img_path = os.path.join(CROPS_DIR_ENTRAINEMENT, row["nom_image"])
     if os.path.exists(img_path):
         print(f"On traite {row['nom_image']} (de label {row['label']})")
-        x_crop = prétraitement_image(img_path) # shape (4096,)
+        x_crop = prétraitement_crop(img_path) # shape (4096,)
         x.append(x_crop) # liste d'array de longueur 4096 . x = [array([0, 255, 127, ...]), array([12, 98, 4, ...]), ...]
 
 
